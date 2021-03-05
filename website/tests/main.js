@@ -1,9 +1,9 @@
 import assert from "assert";
 
-describe("FactoryFloor", function () {
+describe("simple-todos", function () {
   it("package.json has correct name", async function () {
     const { name } = await import("../package.json");
-    assert.strictEqual(name, "FactoryFloor");
+    assert.strictEqual(name, "simple-todos");
   });
 
   if (Meteor.isClient) {

@@ -1,5 +1,5 @@
 {
-  "name": "FactoryFloor",
+  "name": "simple-todos",
   "private": true,
   "scripts": {
     "start": "meteor run",
@@ -9,13 +9,12 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.11.2",
-    "meteor-node-stubs": "^1.0.1",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1"
+    "jquery": "^3.5.1",
+    "meteor-node-stubs": "^1.0.1"
   },
   "meteor": {
     "mainModule": {
-      "client": "client/main.jsx",
+      "client": "client/main.js",
       "server": "server/main.js"
     },
     "testModule": "tests/main.js"
