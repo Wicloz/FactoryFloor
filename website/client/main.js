@@ -4,7 +4,7 @@ import {Tasks} from '../imports/collections/tasks';
 import '../imports/templates/task';
 import './main.html';
 
-Template.body.onCreated(function bodyOnCreated() {
+Template.body.onCreated(() => {
     this.state = new ReactiveDict();
     Meteor.subscribe('tasks');
 });
