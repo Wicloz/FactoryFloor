@@ -5,7 +5,7 @@ class BaseIntegration(ABC):
     KEY = None
 
     @abstractmethod
-    def set_device_info(self, device, configuration):
+    def set_device_info(self, device, config):
         pass
 
     @abstractmethod

@@ -8,7 +8,7 @@ class PhilipsHue(BaseIntegration):
     def __init__(self, ip, key):
         self.base = 'http://' + ip + '/api/' + key + '/'
 
-    def set_device_info(self, device, configuration):
+    def set_device_info(self, device, config):
         pass
 
     def get_all_device_info(self):
