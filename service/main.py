@@ -22,6 +22,7 @@ if __name__ == '__main__':
         for general, specific in value.get_all_device_info():
             general['device'] = specific
             general['provider'] = key
+            general['changed'] = False
             database['devices'].update({
                 'provider': general['provider'],
                 'ikey': general['ikey'],
