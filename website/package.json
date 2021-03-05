@@ -1,12 +1,6 @@
 {
-  "name": "simple-todos",
+  "name": "factory-floor",
   "private": true,
-  "scripts": {
-    "start": "meteor run",
-    "test": "meteor test --once --driver-package meteortesting:mocha",
-    "test-app": "TEST_WATCH=1 meteor test --full-app --driver-package meteortesting:mocha",
-    "visualize": "meteor --production --extra-packages bundle-visualizer"
-  },
   "dependencies": {
     "@babel/runtime": "^7.11.2",
     "jquery": "^3.5.1",
@@ -16,7 +10,6 @@
     "mainModule": {
       "client": "client/main.js",
       "server": "server/main.js"
-    },
-    "testModule": "tests/main.js"
+    }
   }
 }
