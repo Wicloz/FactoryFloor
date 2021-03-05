@@ -1,1 +1,1 @@
-import '../imports/api/tasks.js';
+import '../imports/collections/tasks.js';
