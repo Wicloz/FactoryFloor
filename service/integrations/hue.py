@@ -8,40 +8,48 @@ class PhilipsHue(BaseIntegration):
     def __init__(self, ip, key):
         self.base = 'http://' + ip + '/api/' + key + '/'
 
-    def set_device_info(self, device, config):
+    def set_device_info(self, device, state):
         pass
 
-    def get_all_device_info(self):
-        for key, light in requests.get(self.base + 'lights').json().items():
+    def get_device_info(self, ikey):
+        device = requests.get(self.base + ikey).json()
+        mode = ikey.split('/')[0]
+
+        if mode == 'lights':
             general = {
-                'ikey': f'lights/{key}',
-                'connected': light['state']['reachable'],
-                'name': light['name'],
+                'connected': device['state']['reachable'],
+                'name': device['name'],
                 'type': 'light',
             }
             specific = {
-                'on': light['state']['on'],
-                'brightness': light['state']['bri'] / 255,
+                'on': device['state']['on'],
+                'brightness': device['state']['bri'] / 255,
             }
-            yield general, specific
+            return general, specific
 
-        for key, sensor in requests.get(self.base + 'sensors').json().items():
-            if sensor['type'] in (
-                    'Daylight', 'CLIPGenericFlag', 'Geofence', 'CLIPGenericStatus', 'CLIPPresence', 'ZLLSwitch'
-            ):
-                continue
-
+        if mode == 'sensors':
             general = {
-                'ikey': f'sensors/{key}',
-                'connected': sensor['config']['reachable'],
-                'name': sensor['name'],
+                'connected': device['config']['reachable'],
+                'name': device['name'],
                 'type': 'sensor',
             }
+            specific = device['state']
 
-            if 'temperature' in sensor['state']:
-                sensor['state']['temperature'] /= 100
-            if 'lightlevel' in sensor['state']:
-                sensor['state']['lightlevel'] = 10 ** ((sensor['state']['lightlevel'] - 1) / 10000)
+            del specific['lastupdated']
 
-            del sensor['state']['lastupdated']
-            yield general, sensor['state']
+            if 'temperature' in specific:
+                specific['temperature'] /= 100
+            if 'lightlevel' in specific:
+                specific['lightlevel'] = 10 ** ((specific['lightlevel'] - 1) / 10000)
+
+            return general, specific
+
+    def list_all_devices(self):
+        for key in requests.get(self.base + 'lights').json().keys():
+            yield f'lights/{key}'
+
+        for key, sensor in requests.get(self.base + 'sensors').json().items():
+            if sensor['type'] not in (
+                    'Daylight', 'CLIPGenericFlag', 'Geofence', 'CLIPGenericStatus', 'CLIPPresence', 'ZLLSwitch'
+            ):
+                yield f'sensors/{key}'

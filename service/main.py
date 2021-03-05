@@ -18,17 +18,20 @@ if __name__ == '__main__':
     database['devices'].create_index(keys='changed')
 
     for key, value in integrations.items():
-        found = []
-        for general, specific in value.get_all_device_info():
-            general['device'] = specific
+        devices = list(value.list_all_devices())
+
+        for device in devices:
+            general, specific = value.get_device_info(device)
+            general['ikey'] = device
             general['provider'] = key
+            general['state'] = specific
             general['changed'] = False
+
             database['devices'].update({
                 'provider': general['provider'],
                 'ikey': general['ikey'],
             }, general, True)
-            found.append(general['ikey'])
         database['devices'].remove({
             'provider': key,
-            'ikey': {'$nin': found},
+            'ikey': {'$nin': devices},
         })
