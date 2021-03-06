@@ -3,7 +3,7 @@ import {Devices} from '../imports/collections/devices';
 import '../imports/templates/device';
 import './main.html';
 
-Template.body.onCreated(() => {
+Template.body.onCreated(function () {
     Meteor.subscribe('devices');
 });
 
