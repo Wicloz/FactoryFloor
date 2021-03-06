@@ -12,15 +12,17 @@ if (Meteor.isServer) {
 
 Devices.helpers({
     _icon() {
-        if (!this.active) {
-            return this.icon ? this.icon : 'fa-question-circle'
+        let defaults = {
+            light: 'bi-lightbulb',
+            plug: 'bi-plug',
+        };
+
+        let icon = this.icon || defaults[this.type] || 'bi-question-circle'
+        if (!this.active || this.state[this.active]) {
+            icon += '-fill'
         }
 
-        if (this.state[this.active]) {
-            return this.icon ? this.icon.active : 'fa-question-circle'
-        } else {
-            return this.icon ? this.icon.inactive : 'fa-question-circle'
-        }
+        return icon
     },
 });
 
