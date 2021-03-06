@@ -20,6 +20,7 @@ class PhilipsHue(BaseIntegration):
                 'connected': device['state']['reachable'],
                 'name': device['name'],
                 'type': 'light',
+                'active': 'on',
             }
             specific = {
                 'on': device['state']['on'],
@@ -32,6 +33,7 @@ class PhilipsHue(BaseIntegration):
                 'connected': device['config']['reachable'],
                 'name': device['name'],
                 'type': 'sensor',
+                'active': False,
             }
             specific = device['state']
 
@@ -41,6 +43,8 @@ class PhilipsHue(BaseIntegration):
                 specific['temperature'] /= 100
             if 'lightlevel' in specific:
                 specific['lightlevel'] = 10 ** ((specific['lightlevel'] - 1) / 10000)
+            if 'presence' in specific:
+                general['active'] = 'presence'
 
             return general, specific
 
