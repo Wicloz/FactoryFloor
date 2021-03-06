@@ -1,5 +1,6 @@
 import {Meteor} from 'meteor/meteor';
 import {Mongo} from 'meteor/mongo';
+import {check, Match} from 'meteor/check';
 
 export const Devices = new Mongo.Collection('devices');
 
@@ -20,5 +21,14 @@ Devices.helpers({
         } else {
             return this.icon ? this.icon.inactive : 'fa-question-circle'
         }
+    },
+});
+
+Meteor.methods({
+    'devices.move'(id, x, y) {
+        check(x, Match.Integer);
+        check(y, Match.Integer);
+
+        Devices.update(id, {$set: {x: x, y: y}})
     },
 });
