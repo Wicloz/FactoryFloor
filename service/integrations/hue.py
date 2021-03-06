@@ -16,16 +16,21 @@ class PhilipsHue(BaseIntegration):
         mode = ikey.split('/')[0]
 
         if mode == 'lights':
+            dimmable = 'bri' in device['state']
+
             general = {
                 'connected': device['state']['reachable'],
                 'name': device['name'],
-                'type': 'light',
+                'type': 'light' if dimmable else 'plug',
                 'active': 'on',
             }
             specific = {
                 'on': device['state']['on'],
-                'brightness': device['state']['bri'] / 255,
             }
+
+            if dimmable:
+                specific['brightness'] = device['state']['bri'] / 255
+
             return general, specific
 
         if mode == 'sensors':
