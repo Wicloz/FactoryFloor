@@ -1,6 +1,10 @@
 import './device.html';
 import {Template} from 'meteor/templating';
 
+Template.device.onRendered(function () {
+    this.$('[data-toggle="tooltip"]').tooltip()
+});
+
 Template.device.onCreated(function () {
     Template.makeState({
         dragging: false,
