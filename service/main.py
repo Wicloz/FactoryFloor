@@ -30,7 +30,7 @@ if __name__ == '__main__':
             database['devices'].update({
                 'provider': general['provider'],
                 'ikey': general['ikey'],
-            }, general, True)
+            }, {'$set': general}, True)
         database['devices'].remove({
             'provider': key,
             'ikey': {'$nin': devices},
