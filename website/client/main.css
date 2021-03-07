@@ -2,7 +2,7 @@
     width: 100%;
 }
 
-.device {
+.draggable {
     position: absolute;
 }
 
@@ -15,8 +15,4 @@
     visibility: hidden !important;
     user-select: none !important;
     display: none !important;
-}
-
-.device-card {
-    position: absolute;
 }

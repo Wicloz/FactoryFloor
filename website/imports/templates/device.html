@@ -1,10 +1,10 @@
 <template name="device">
 
-    <div class="device" style="left: {{left}}px; top: {{top}}px;">
+    <span class="device {{#if location}}draggable{{/if}}" style="left: {{left}}px; top: {{top}}px;">
         <i class="bi {{_icon}}" data-toggle="tooltip" data-placement="top" title="{{name}}"></i>
-    </div>
+    </span>
 
-    <div class="device-card {{#if hideCard}}removed{{/if}}">
+    <div class="draggable {{#if hideCard}}removed{{/if}}">
         <div class="card">
             <div class="card-header">
                 <i class="bi {{_icon}}"></i>
