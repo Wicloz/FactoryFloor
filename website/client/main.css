@@ -5,3 +5,8 @@
 .device {
     position: absolute;
 }
+
+.device .bi {
+    color: white;
+    mix-blend-mode: difference;
+}
