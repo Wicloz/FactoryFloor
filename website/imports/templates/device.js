@@ -38,7 +38,7 @@ Template.device.onCreated(function () {
 
 Template.device.events({
     'mousedown .device'(event, instance) {
-        if (Session.get('EditMode')) {
+        if (Session.get('EditMode') && event.button === 0) {
             event.preventDefault();
 
             instance.state.set('offsetX', event.clientX - Template.currentData().x || 0)
@@ -50,6 +50,11 @@ Template.device.events({
         }
     },
     'click .device'(event, instance) {
+        if (!Session.get('EditMode')) {
+            console.log(event);
+        }
+    },
+    'contextmenu .device'(event, instance) {
         event.preventDefault();
         instance.state.set('cardShow', !instance.state.get('cardShow'));
     },
