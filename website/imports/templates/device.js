@@ -49,9 +49,9 @@ Template.device.events({
             document.onmousemove = instance.drag;
         }
     },
-    'click .device'(event, instance) {
-        if (!Session.get('EditMode')) {
-            console.log(event);
+    'click .device'() {
+        if (!Session.get('EditMode') && Template.currentData()._toggleable()) {
+            Meteor.call('devices.toggle', Template.currentData()._id);
         }
     },
     'contextmenu .device'(event, instance) {

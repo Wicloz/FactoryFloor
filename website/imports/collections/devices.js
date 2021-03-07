@@ -24,6 +24,9 @@ Devices.helpers({
 
         return icon
     },
+    _toggleable() {
+        return !this.changed && this.connected && 'on' in this.state;
+    },
 });
 
 Meteor.methods({
@@ -32,5 +35,13 @@ Meteor.methods({
         check(y, Match.Integer);
 
         Devices.update(id, {$set: {x: x, y: y}})
+    },
+    'devices.toggle'(id) {
+        let device = Devices.findOne(id);
+        if (device._toggleable()) {
+            Devices.update(id, {
+                $set: {'changed': true, 'state.on': !device.state.on}
+            });
+        }
     },
 });
