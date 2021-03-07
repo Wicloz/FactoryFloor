@@ -13,6 +13,8 @@ Template.device.onCreated(function () {
         offsetY: undefined,
         left: undefined,
         top: undefined,
+
+        cardShow: false,
     });
 
     this.drop = () => {
@@ -47,6 +49,10 @@ Template.device.events({
             document.onmousemove = instance.drag;
         }
     },
+    'click .device'(event, instance) {
+        event.preventDefault();
+        instance.state.set('cardShow', !instance.state.get('cardShow'));
+    },
 });
 
 Template.device.helpers({
@@ -55,5 +61,8 @@ Template.device.helpers({
     },
     top() {
         return Template.instance().state.get('top');
+    },
+    hideCard() {
+        return !Template.instance().state.get('cardShow');
     },
 });

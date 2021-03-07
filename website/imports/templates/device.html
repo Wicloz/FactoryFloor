@@ -1,5 +1,19 @@
 <template name="device">
+
     <div class="device" style="left: {{left}}px; top: {{top}}px;">
         <i class="bi {{_icon}}" data-toggle="tooltip" data-placement="top" title="{{name}}"></i>
     </div>
+
+    <div class="device-card {{#if hideCard}}removed{{/if}}">
+        <div class="card">
+            <div class="card-header">
+                <i class="bi {{_icon}}"></i>
+                {{name}}
+            </div>
+            <div class="card-body">
+                TODO
+            </div>
+        </div>
+    </div>
+
 </template>
