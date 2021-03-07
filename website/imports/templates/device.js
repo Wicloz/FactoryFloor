@@ -1,5 +1,6 @@
 import './device.html';
 import {Template} from 'meteor/templating';
+import {Session} from 'meteor/session';
 
 Template.device.onRendered(function () {
     this.$('[data-toggle="tooltip"]').tooltip()
@@ -35,14 +36,16 @@ Template.device.onCreated(function () {
 
 Template.device.events({
     'mousedown .device'(event, instance) {
-        event.preventDefault();
+        if (Session.get('EditMode')) {
+            event.preventDefault();
 
-        instance.state.set('offsetX', event.clientX - Template.currentData().x || 0)
-        instance.state.set('offsetY', event.clientY - Template.currentData().y || 0)
-        instance.state.set('dragging', true)
+            instance.state.set('offsetX', event.clientX - Template.currentData().x || 0)
+            instance.state.set('offsetY', event.clientY - Template.currentData().y || 0)
+            instance.state.set('dragging', true)
 
-        document.onmouseup = instance.drop;
-        document.onmousemove = instance.drag;
+            document.onmouseup = instance.drop;
+            document.onmousemove = instance.drag;
+        }
     },
 });
 

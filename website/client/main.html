@@ -12,23 +12,32 @@
 
 <body>
     <div class="container">
+
         <div class="row">
+            <div class="col-auto">
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" id="editModeToggle">
+                    <label class="form-check-label" for="editModeToggle">Edit Mode</label>
+                </div>
+            </div>
             <div class="col">
                 {{#each devices}}
                     {{> device}}
                 {{/each}}
             </div>
         </div>
+
         <div class="row">
             <div class="col-sm">
-                <img src="Floor1.png" class="floorplan">
+                <img src="Floor1.png" alt="Floor 1" class="floorplan">
             </div>
             <div class="col-sm">
-                <img src="Floor2.png" class="floorplan">
+                <img src="Floor2.png" alt="Floor 2" class="floorplan">
             </div>
             <div class="col-sm">
-                <img src="Floor3.png" class="floorplan">
+                <img src="Floor3.png" alt="Floor 3" class="floorplan">
             </div>
         </div>
+
     </div>
 </body>
