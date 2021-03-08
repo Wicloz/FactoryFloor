@@ -10,9 +10,3 @@
     color: white;
     mix-blend-mode: difference;
 }
-
-.removed {
-    visibility: hidden !important;
-    user-select: none !important;
-    display: none !important;
-}

@@ -10,8 +10,8 @@ Template.body.onCreated(function () {
 });
 
 Template.body.helpers({
-    devices() {
-        return Devices.find();
+    devices(floor) {
+        return Devices.find({floor: floor});
     },
 });
 

@@ -13,8 +13,6 @@ Template.device.onCreated(function () {
         offsetY: undefined,
         left: undefined,
         top: undefined,
-
-        cardShow: false,
     });
 
     this.drop = () => {
@@ -41,9 +39,9 @@ Template.device.events({
         if (Session.get('EditMode') && event.button === 0) {
             event.preventDefault();
 
-            instance.state.set('offsetX', event.clientX - Template.currentData().x || 0)
-            instance.state.set('offsetY', event.clientY - Template.currentData().y || 0)
-            instance.state.set('dragging', true)
+            instance.state.set('offsetX', event.clientX - Template.currentData().x || 0);
+            instance.state.set('offsetY', event.clientY - Template.currentData().y || 0);
+            instance.state.set('dragging', true);
 
             document.onmouseup = instance.drop;
             document.onmousemove = instance.drag;
@@ -54,10 +52,6 @@ Template.device.events({
             Meteor.call('devices.toggle', Template.currentData()._id);
         }
     },
-    'contextmenu .device'(event, instance) {
-        event.preventDefault();
-        instance.state.set('cardShow', !instance.state.get('cardShow'));
-    },
 });
 
 Template.device.helpers({
@@ -66,8 +60,5 @@ Template.device.helpers({
     },
     top() {
         return Template.instance().state.get('top');
-    },
-    hideCard() {
-        return !Template.instance().state.get('cardShow');
     },
 });

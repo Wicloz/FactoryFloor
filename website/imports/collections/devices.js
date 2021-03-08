@@ -1,6 +1,6 @@
 import {Meteor} from 'meteor/meteor';
 import {Mongo} from 'meteor/mongo';
-import {check, Match} from 'meteor/check';
+import {check} from 'meteor/check';
 
 export const Devices = new Mongo.Collection('devices');
 
@@ -30,11 +30,12 @@ Devices.helpers({
 });
 
 Meteor.methods({
-    'devices.move'(id, x, y) {
-        check(x, Match.Integer);
-        check(y, Match.Integer);
+    'devices.move'(id, floor, x, y) {
+        check(floor, Number);
+        check(x, Number);
+        check(y, Number);
 
-        Devices.update(id, {$set: {x: x, y: y}})
+        Devices.update(id, {$set: {location: {floor: floor, x: x, y: y}}});
     },
     'devices.toggle'(id) {
         let device = Devices.findOne(id);

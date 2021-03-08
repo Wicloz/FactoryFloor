@@ -29,12 +29,21 @@
 
         <div class="row">
             <div class="col-sm">
+                {{#each devices 1}}
+                    {{> device}}
+                {{/each}}
                 <img src="Floor1.png" alt="Floor 1" class="floorplan">
             </div>
             <div class="col-sm">
+                {{#each devices 2}}
+                    {{> device}}
+                {{/each}}
                 <img src="Floor2.png" alt="Floor 2" class="floorplan">
             </div>
             <div class="col-sm">
+                {{#each devices 3}}
+                    {{> device}}
+                {{/each}}
                 <img src="Floor3.png" alt="Floor 3" class="floorplan">
             </div>
         </div>
