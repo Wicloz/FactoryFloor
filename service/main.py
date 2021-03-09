@@ -27,11 +27,11 @@ if __name__ == '__main__':
             general['state'] = specific
             general['changed'] = False
 
-            database['devices'].update({
+            database['devices'].update_one({
                 'provider': general['provider'],
                 'ikey': general['ikey'],
             }, {'$set': general}, True)
-        database['devices'].remove({
+        database['devices'].delete_many({
             'provider': key,
             'ikey': {'$nin': devices},
         })
