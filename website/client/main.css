@@ -5,8 +5,21 @@
 .device {
     color: white;
     mix-blend-mode: difference;
+    height: 32px;
+    width: 32px;
+    line-height: 32px;
+    text-align: center;
 }
 
 .floor {
     position: relative;
+}
+
+.moved {
+    position: absolute;
+}
+
+.behind {
+    position: absolute;
+    display: block;
 }

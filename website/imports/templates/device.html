@@ -1,7 +1,14 @@
 <template name="device">
 
-    <span class="device {{#if location}}draggable{{/if}}" style="left: {{left}}px; top: {{top}}px;">
-        <i class="bi {{_icon}}" data-toggle="tooltip" data-placement="top" title="{{name}}"></i>
+    <span class="device {{#if location}}moved{{/if}}" style="top:{{location.y}}%; left:{{location.x}}%;" title="{{name}}">
+        {{#if moving}}
+            <div class="spinner-grow behind"></div>
+        {{/if}}
+        {{#if changed}}
+            <div class="spinner-border spinner-border-sm" role="status"></div>
+        {{else}}
+            <i class="bi {{_icon}}"></i>
+        {{/if}}
     </span>
 
 </template>

@@ -2,52 +2,37 @@ import './device.html';
 import {Template} from 'meteor/templating';
 import {Session} from 'meteor/session';
 
-Template.device.onRendered(function () {
-    this.$('[data-toggle="tooltip"]').tooltip();
-});
-
 Template.device.onCreated(function () {
     Template.makeState({
-        dragging: false,
-        offsetX: undefined,
-        offsetY: undefined,
-        left: undefined,
-        top: undefined,
+        moving: false,
     });
 
-    this.drop = () => {
-        document.onmouseup = undefined;
-        document.onmousemove = undefined;
-        Meteor.call('devices.move', this.data._id, this.state.get('left'), this.state.get('top'));
-        this.state.set('dragging', false);
-    };
-    this.drag = (event) => {
-        this.state.set('left', event.clientX - this.state.get('offsetX'));
-        this.state.set('top', event.clientY - this.state.get('offsetY'));
-    };
+    this.drop = (event) => {
+        this.state.set('moving', false);
+        document.onclick = undefined;
 
-    this.autorun(() => {
-        if (!this.state.get('dragging')) {
-            this.state.set('left', Template.currentData().x);
-            this.state.set('top', Template.currentData().y);
+        if ('floor' in event.target.dataset) {
+            Meteor.call(
+                'devices.move',
+                this.data._id,
+                parseInt(event.target.dataset.floor),
+                100 * (event.offsetX - this.$('.device').width() / 2) / event.target.width,
+                100 * (event.offsetY - this.$('.device').height() / 2) / event.target.height,
+            );
+        } else {
+            Meteor.call('devices.unmove', this.data._id);
         }
-    });
+    };
 });
 
 Template.device.events({
-    'mousedown .device'(event, instance) {
-        if (Session.get('EditMode') && event.button === 0) {
-            event.preventDefault();
-
-            instance.state.set('offsetX', event.clientX - Template.currentData().x || 0);
-            instance.state.set('offsetY', event.clientY - Template.currentData().y || 0);
-            instance.state.set('dragging', true);
-
-            document.onmouseup = instance.drop;
-            document.onmousemove = instance.drag;
+    'click .device'(event, instance) {
+        if (Session.get('EditMode')) {
+            instance.state.set('moving', true);
+            _.delay(() => {
+                document.onclick = instance.drop;
+            });
         }
-    },
-    'click .device'() {
         if (!Session.get('EditMode') && Template.currentData()._toggleable()) {
             Meteor.call('devices.toggle', Template.currentData()._id);
         }
@@ -55,10 +40,7 @@ Template.device.events({
 });
 
 Template.device.helpers({
-    left() {
-        return Template.instance().state.get('left');
-    },
-    top() {
-        return Template.instance().state.get('top');
+    moving() {
+        return Template.instance().state.get('moving');
     },
 });

@@ -37,6 +37,9 @@ Meteor.methods({
 
         Devices.update(id, {$set: {location: {floor: floor, x: x, y: y}}});
     },
+    'devices.unmove'(id) {
+        Devices.update(id, {$unset: {location: ''}});
+    },
     'devices.toggle'(id) {
         let device = Devices.findOne(id);
         if (device._toggleable()) {
