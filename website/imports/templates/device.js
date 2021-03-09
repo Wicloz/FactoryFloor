@@ -3,7 +3,7 @@ import {Template} from 'meteor/templating';
 import {Session} from 'meteor/session';
 
 Template.device.onRendered(function () {
-    this.$('[data-toggle="tooltip"]').tooltip()
+    this.$('[data-toggle="tooltip"]').tooltip();
 });
 
 Template.device.onCreated(function () {
