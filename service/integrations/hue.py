@@ -9,7 +9,9 @@ class PhilipsHue(BaseIntegration):
         self.base = 'http://' + ip + '/api/' + key + '/'
 
     def set_device_info(self, device, state):
-        pass
+        requests.put(self.base + device['ikey'], json={'name': device['name']})
+        if 'on' in state:
+            requests.put(self.base + device['ikey'] + '/state', json={'on': state['on']})
 
     def get_device_info(self, ikey):
         device = requests.get(self.base + ikey).json()

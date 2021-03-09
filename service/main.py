@@ -18,6 +18,13 @@ if __name__ == '__main__':
     database['devices'].create_index(keys='changed')
 
     for key, value in integrations.items():
+        for changed in database['devices'].find({
+            'provider': key,
+            'changed': True,
+        }):
+            value.set_device_info(changed, changed.pop('state'))
+
+    for key, value in integrations.items():
         ikeys = list(value.list_all_devices())
 
         for ikey in ikeys:
