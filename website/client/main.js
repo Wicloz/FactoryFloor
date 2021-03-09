@@ -11,7 +11,7 @@ Template.body.onCreated(function () {
 
 Template.body.helpers({
     devices(floor) {
-        return Devices.find({floor: floor});
+        return Devices.find({'location.floor': floor});
     },
 });
 

@@ -2,11 +2,11 @@
     width: 100%;
 }
 
-.draggable {
-    position: absolute;
-}
-
-.device .bi {
+.device {
     color: white;
     mix-blend-mode: difference;
+}
+
+.floor {
+    position: relative;
 }
