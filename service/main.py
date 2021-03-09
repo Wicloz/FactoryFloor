@@ -18,11 +18,11 @@ if __name__ == '__main__':
     database['devices'].create_index(keys='changed')
 
     for key, value in integrations.items():
-        devices = list(value.list_all_devices())
+        ikeys = list(value.list_all_devices())
 
-        for device in devices:
-            general, specific = value.get_device_info(device)
-            general['ikey'] = device
+        for ikey in ikeys:
+            general, specific = value.get_device_info(ikey)
+            general['ikey'] = ikey
             general['provider'] = key
             general['state'] = specific
             general['changed'] = False
@@ -33,5 +33,5 @@ if __name__ == '__main__':
             }, {'$set': general}, True)
         database['devices'].delete_many({
             'provider': key,
-            'ikey': {'$nin': devices},
+            'ikey': {'$nin': ikeys},
         })
